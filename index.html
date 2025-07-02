@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025年7月日本旅行地圖</title>
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    
+    <!-- Local Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <div class="header">
+        <h1>🗾 2025年7月日本旅行地圖</h1>
+        <p>關西→東京 | 3大祭典 | 10個世界遺產 | 6個國寶體驗</p>
+        <div class="trip-badge">
+            <span>✈️</span>
+            <span>17天精華行程</span>
+        </div>
+    </div>    
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- SIDEBAR SECTION -->
+        <div class="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <h2>🗾 旅遊控制台</h2>
+                <p>日本17天精華行程</p>
+            </div>
+            
+            <!-- Location Filters -->
+            <div class="sidebar-section">
+                <h3>🗺️ 地區篩選</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterMap('all')">🌏 全部</button>
+                    <button class="filter-btn" onclick="filterMap('kyoto')">⛩️ 京都</button>
+                    <button class="filter-btn" onclick="filterMap('osaka')">🏯 大阪</button>
+                    <button class="filter-btn" onclick="filterMap('tokyo')">🗼 東京</button>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="sidebar-section">
+                <h3>🎯 主題篩選</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn" onclick="filterMap('festival')">🎭 祭典</button>
+                    <button class="filter-btn" onclick="filterMap('heritage')">🏛️ 世界遺產</button>
+                </div>
+            </div>
+            
+            <!-- Day Navigation -->
+            <div class="sidebar-section">
+                <h3>📅 日程導航</h3>
+                <div class="day-filter-grid">
+                    <button class="day-btn active" onclick="filterByDay('all')">全部</button>
+                    <button class="day-btn" onclick="filterByDay(1)" data-day="1">Day 1</button>
+                    <button class="day-btn" onclick="filterByDay(2)" data-day="2">Day 2</button>
+                    <button class="day-btn" onclick="filterByDay(3)" data-day="3">Day 3</button>
+                    <button class="day-btn" onclick="filterByDay(4)" data-day="4">Day 4</button>
+                    <button class="day-btn" onclick="filterByDay(5)" data-day="5">Day 5</button>
+                    <button class="day-btn" onclick="filterByDay(6)" data-day="6">Day 6</button>
+                    <button class="day-btn" onclick="filterByDay(7)" data-day="7">Day 7</button>
+                    <button class="day-btn" onclick="filterByDay(8)" data-day="8">Day 8</button>
+                    <button class="day-btn" onclick="filterByDay(9)" data-day="9">Day 9</button>
+                    <button class="day-btn" onclick="filterByDay(10)" data-day="10">Day 10</button>
+                    <button class="day-btn" onclick="filterByDay(11)" data-day="11">Day 11</button>
+                    <button class="day-btn" onclick="filterByDay(12)" data-day="12">Day 12</button>
+                    <button class="day-btn" onclick="filterByDay(13)" data-day="13">Day 13</button>
+                    <button class="day-btn" onclick="filterByDay(14)" data-day="14">Day 14</button>
+                    <button class="day-btn" onclick="filterByDay(15)" data-day="15">Day 15</button>
+                    <button class="day-btn" onclick="filterByDay(16)" data-day="16">Day 16</button>
+                </div>
+            </div>            
+            <!-- Timeline Controls -->
+            <div class="sidebar-section">
+                <h3>📅 行程時間軸</h3>
+                <div class="timeline-controls">
+                    <button class="timeline-btn active" onclick="showTimelineMode('compact')">精簡</button>
+                    <button class="timeline-btn" onclick="showTimelineMode('detailed')">詳細</button>
+                    <button class="route-toggle-btn" onclick="toggleRouteLines()">🛣️ 路線</button>
+                </div>
+                <div class="timeline-container" id="timeline-container">
+                    <!-- Timeline will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Color Legend -->
+            <div class="sidebar-section">
+                <h3>🎨 顏色圖例</h3>
+                <div class="legend-categories">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f39c12;"></div>
+                        <span>世界遺產</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #9b59b6;"></div>
+                        <span>國寶建築</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>祭典活動</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #00b894;"></div>
+                        <span>自然景觀</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #74b9ff;"></div>
+                        <span>歷史建築</span>
+                    </div>
+                </div>                
+                <div class="day-colors">
+                    <h4>日程顏色</h4>
+                    <div class="legend-grid">
+                        <div class="legend-item"><span class="color-dot" style="background: #e74c3c;"></span>Day 1, 15</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #3498db;"></span>Day 2</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #2ecc71;"></span>Day 3</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #f39c12;"></span>Day 4</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #9b59b6;"></span>Day 5, 16</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #e67e22;"></span>Day 6</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #1abc9c;"></span>Day 7</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #16a085;"></span>Day 8</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #8e44ad;"></span>Day 9</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #d35400;"></span>Day 10</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #c0392b;"></span>Day 11</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #27ae60;"></span>Day 12</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #2980b9;"></span>Day 13</div>
+                        <div class="legend-item"><span class="color-dot" style="background: #f1c40f;"></span>Day 14</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="sidebar-section">
+                <div class="stats">
+                    <h4>📊 行程統計</h4>
+                    <div class="stat-row">
+                        <span>總天數</span>
+                        <span class="stat-value">17天</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>世界遺產</span>
+                        <span class="stat-value">10個 ✅</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>國寶體驗</span>
+                        <span class="stat-value">6個 ✅</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>三大祭典</span>
+                        <span class="stat-value">3個 🎭</span>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <!-- MAP SECTION -->
+        <div class="map-container">
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <div>🗺️ 載入地圖中...</div>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    
+    <!-- Local Scripts -->
+    <script src="js/config.js"></script>
+    <script src="data/travel-data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/managers/marker-manager.js"></script>
+    <script src="js/managers/popup-manager.js"></script>
+    <script src="js/managers/map-manager.js"></script>
+    <script src="js/managers/filter-manager.js"></script>
+    <script src="js/managers/route-timeline-manager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+        padding: 0 16px;
+    }
+    
+    .sidebar {
+        width: 100%;
+        order: -1;
+    }
+    
+    .map-container {
+        height: 400px;
+        min-width: auto;
+    }
+    
+    .controls {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 16px;
+        max-width: none;
+    }
+    
+    .header h1 {
+        font-size: 2em;
+    }
+}
